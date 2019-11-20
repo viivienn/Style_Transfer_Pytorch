@@ -1,10 +1,7 @@
-# PyTorch Flask API
+# PyTorch Style Transfer
 
-
-Check the demo [here](https://pytorch-imagenet.herokuapp.com/).
-
-If you'd like to check a super simple API server, then check [this repo](https://github.com/avinassh/pytorch-flask-api).
-
+Pytorch implementation of "Texture Synthesis Using Convolutional Neural Networks" 
+https://papers.nips.cc/paper/5633-texture-synthesis-using-convolutional-neural-networks.pdf
 
 ## Requirements
 
@@ -20,11 +17,3 @@ Run the server:
     python app.py
 
 
-## Heroku Deployment
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/avinassh/pytorch-flask-api-heroku)
-
-
-## License
-
-The mighty MIT license. Please check `LICENSE` for more details.

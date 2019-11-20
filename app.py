@@ -1,33 +1,30 @@
-import os
-
 from flask import Flask, render_template, request, redirect
-
 from inference import get_prediction
-from commons import format_class_name
-
 app = Flask(__name__)
 
+import os
+import time
+CONTENT_FOLDER = os.path.join('static', 'content')
+app.config['UPLOAD_FOLDER'] = CONTENT_FOLDER
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        if not request.files.get('content', None):
-            return redirect(request.url)
-        content = request.files.get('content')
-        print(content)
-        # if 'file' not in request.files:
+        # if not request.files.get('content', None) or not request.files.get('style', None):
         #     return redirect(request.url)
-        # file = request.files.get('file')
-        # if not file:
-        #     return
-        # img_bytes = file.read()
-        # class_id, class_name = get_prediction(image_bytes=img_bytes)
-        # class_name = format_class_name(class_name)
-        # return render_template('result.html', class_id=class_id,
-        #                        class_name=class_name)
-        return render_template('result.html', file=content)
-    return render_template('index.html')
 
+        content = request.files.get('content')
+        style = request.files.get('style')
+
+        full_filename = os.path.join(app.config['UPLOAD_FOLDER'], "target.png")
+        target = get_prediction(content, style)
+        target.save(full_filename)
+        while not os.path.isfile(full_filename):
+            print("in")
+            time.sleep(1)
+        return render_template("result.html", image=full_filename)
+
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
