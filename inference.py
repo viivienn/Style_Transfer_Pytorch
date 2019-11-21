@@ -3,9 +3,10 @@ import torch
 import torch.optim as optim
 from PIL import Image
 import numpy as np
-vgg = get_model()
+
 
 def get_prediction(content, style):
+    vgg = get_model()
     try:
         content = load_image(content)
         style = load_image(style)
