@@ -4,10 +4,9 @@ import torch.optim as optim
 from PIL import Image
 import numpy as np
 
-
 def get_prediction(content, style):
-    vgg = get_model()
     try:
+        vgg = get_model()
         content = load_image(content)
         style = load_image(style)
 
@@ -68,19 +67,20 @@ def get_prediction(content, style):
         arr = im_convert(target) * 255
         arr = np.array(arr, dtype=np.uint8)
         return Image.fromarray(arr, 'RGB')
-    except Exception:
+    except Exception as e:
+        print(e)
         return 0, 'error'
 
 
 
 def get_features(image, model):
     layers = {'0': 'conv1_1',  # more effective at recreating style fatures
-              '5': 'conv2_1',
-              '10': 'conv3_1',
-              '19': 'conv4_1',
-              '21': 'conv4_2',
+              '4': 'conv2_1',
+              '6': 'conv3_1',
+              '10': 'conv4_1',
+              '11': 'conv4_2',
               # content extraction, only one layer sufficient for content and deep into NN fro high depth image feature
-              '28': 'conv5_1'}
+              '12': 'conv5_1'}
     features = {}
 
     for name, layer in model._modules.items():
