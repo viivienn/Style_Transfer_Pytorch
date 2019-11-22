@@ -37,32 +37,32 @@ def get_prediction(content, style):
 
         capture_frame = steps / 300
         counter = 0
-
-        for ii in range(1, steps + 1):
-            target_features = get_features(target, vgg)
-            content_loss = torch.mean((target_features['conv4_2'] - content_features['conv4_2']) ** 2)
-            style_loss = 0
-
-            for layer in style_weights:
-                target_feature = target_features[layer]
-                target_gram = gram_matrix(target_feature)
-                style_gram = style_grams[layer]
-                layer_style_loss = style_weights[layer] * torch.mean((target_gram - style_gram) ** 2)
-                _, d, h, w = target_feature.shape
-                style_loss += layer_style_loss / (d * h * w)
-            total_loss = content_loss * content_weight + style_weight * style_loss
-
-            optimizer.zero_grad()  # reset optimizer
-            total_loss.backward()  # how optimizer learns
-            optimizer.step()  # update weight by iteration
-
-            # if ii % show_every == 0:  # jumped 300 interation
-            #     plt.imshow(im_convert(target))
-            #     plt.axis('off')
-            #     plt.show()
-            # if ii % capture_frame == 0:
-            #     image_array[counter] = im_convert(target)
-            #     counter = counter + 1
+        #
+        # for ii in range(1, steps + 1):
+        #     target_features = get_features(target, vgg)
+        #     content_loss = torch.mean((target_features['conv4_2'] - content_features['conv4_2']) ** 2)
+        #     style_loss = 0
+        #
+        #     for layer in style_weights:
+        #         target_feature = target_features[layer]
+        #         target_gram = gram_matrix(target_feature)
+        #         style_gram = style_grams[layer]
+        #         layer_style_loss = style_weights[layer] * torch.mean((target_gram - style_gram) ** 2)
+        #         _, d, h, w = target_feature.shape
+        #         style_loss += layer_style_loss / (d * h * w)
+        #     total_loss = content_loss * content_weight + style_weight * style_loss
+        #
+        #     optimizer.zero_grad()  # reset optimizer
+        #     total_loss.backward()  # how optimizer learns
+        #     optimizer.step()  # update weight by iteration
+        #
+        #     # if ii % show_every == 0:  # jumped 300 interation
+        #     #     plt.imshow(im_convert(target))
+        #     #     plt.axis('off')
+        #     #     plt.show()
+        #     # if ii % capture_frame == 0:
+        #     #     image_array[counter] = im_convert(target)
+        #     #     counter = counter + 1
         arr = im_convert(target) * 255
         arr = np.array(arr, dtype=np.uint8)
         return Image.fromarray(arr, 'RGB')
