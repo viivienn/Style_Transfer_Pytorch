@@ -4,9 +4,10 @@ import torch.optim as optim
 from PIL import Image
 import numpy as np
 
+vgg = get_model()
+
 def get_prediction(content, style):
     try:
-        vgg = get_model()
         content = load_image(content)
         style = load_image(style)
 
@@ -55,9 +56,7 @@ def get_prediction(content, style):
             total_loss.backward()  # how optimizer learns
             optimizer.step()  # update weight by iteration
 
-            if ii % show_every == 0:  # jumped 300 interation
-                print('Total loss: ', total_loss.item())
-                print('Iteration: ', ii)
+            # if ii % show_every == 0:  # jumped 300 interation
             #     plt.imshow(im_convert(target))
             #     plt.axis('off')
             #     plt.show()
