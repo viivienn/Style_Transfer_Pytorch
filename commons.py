@@ -4,7 +4,7 @@ from torchvision import transforms, models
 
 
 def get_model():
-    vgg = models.densenet121(pretrained=True).features
+    vgg = models.vgg11(pretrained=True).features
 
     for param in vgg.parameters():
         param.requires_grad_(False)
