@@ -18,9 +18,12 @@ def upload_file():
         content = request.files.get('content')
         style = request.files.get('style')
 
-        target = get_prediction(content, style)
+
         full_filename = os.path.join(app.config['UPLOAD_FOLDER'], "target.png")
-        target.save(full_filename)
+        content.save(full_filename)
+
+        # target = get_prediction(content, style)
+        # target.save(full_filename)
         while not os.path.isfile(full_filename):
             print("in")
             time.sleep(1)
