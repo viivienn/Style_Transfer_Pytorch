@@ -18,7 +18,6 @@ def upload_file():
         content = request.files.get('content')
         style = request.files.get('style')
 
-
         full_filename = os.path.join(app.config['UPLOAD_FOLDER'], "target.png")
 
         target = get_prediction(content, style)
